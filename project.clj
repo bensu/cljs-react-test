@@ -1,6 +1,6 @@
 (defproject cljs-react-test "0.1.0-SNAPSHOT"
-  :description "FIXME: write this!"
-  :url "http://example.com/FIXME"
+  :description "A ClojureScript wrapper around Reacts Test Utilities"
+  :url "https://github.com/bensu/cljs-react-test"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
