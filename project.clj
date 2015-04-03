@@ -11,6 +11,11 @@
                  [prismatic/dommy "1.0.0"]
                  [org.omcljs/om "0.8.8" :exclusions [cljsjs/react]]]
 
+  :scm {:name "git"
+        :url "https://github.com/bensu/om-syncing"}
+
+  :deploy-repositories [["clojars" {:creds :gpg}]]
+
   :plugins [[lein-cljsbuild "1.0.4"]]
 
   :source-paths ["src"]
