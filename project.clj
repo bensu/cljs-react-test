@@ -18,16 +18,7 @@
   :clean-targets ^{:protect false} ["target/*"]
   
   :cljsbuild {
-              :builds {:dev {:source-paths ["src" "dev_src"]
-                             :compiler {:output-to "resources/public/js/compiled/cljs_react_test.js"
-                                        :output-dir "resources/public/js/compiled/out"
-                                        :optimizations :none
-                                        :main cljs-react-test.dev
-                                        :asset-path "js/compiled/out"
-                                        :source-map true
-                                        :source-map-timestamp true
-                                        :cache-analysis true }}
-                       :tests {:source-paths ["src" "test"]
+              :builds {:tests {:source-paths ["src" "test"]
                                :notify-command ["phantomjs"
                                                 "vendor/phantom/unit-test.js"
                                                 "vendor/phantom/unit-test.html"]
