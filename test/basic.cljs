@@ -1,4 +1,4 @@
-(ns ^:figwheel-always cljs-react-test.basic
+(ns cljs-react-test.basic
     (:require [cljs.test :refer-macros [deftest testing is are use-fixtures]]
               [cljs-react-test.utils :as tu]
               [dommy.core :as dommy :refer-macros [sel1 sel]]
