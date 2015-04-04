@@ -8,6 +8,13 @@
 
 (enable-console-print!)
 
+(def ^:dynamic c)
+
+(use-fixtures :each (fn [test-fn]
+                      (binding [c (tu/new-container!)]
+                        (test-fn)
+                        (tu/unmount c))))
+
 (defn test-component [data owner]
   (om/component
    (dom/div nil
@@ -19,8 +26,7 @@
 
 (deftest name-component
   (testing "The initial state is displayed"
-    (let [c (tu/new-container!)
-          app-state (atom {:name "Arya"})
+    (let [app-state (atom {:name "Arya"})
           _ (om/root test-component app-state {:target c})
           display-node (second (sel c [:p]))
           input-node (sel1 c [:input])]
@@ -41,8 +47,7 @@
 
 (deftest bool-component
   (testing "The inital state is displayed"
-    (let [c (tu/new-container!)
-          app-state (atom {:answer true})
+    (let [app-state (atom {:answer true})
           _ (om/root button-component app-state {:target c})
           display-node (sel1 c [:p])
           input-node (sel1 c [:button])]
