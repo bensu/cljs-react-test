@@ -68,4 +68,4 @@
   (.scryRenderedComponentsWithType TestUtils react-tree type))
 
 (defn find-one-by-type [react-tree type]
-  (scryRenderedDOMComponentsWithTag TestUtils react-tree type))
+  (.scryRenderedDOMComponentsWithTag TestUtils react-tree type))
