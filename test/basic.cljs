@@ -24,10 +24,12 @@
           _ (om/root test-component app-state {:target c})
           display-node (second (sel c [:p]))
           input-node (sel1 c [:input])]
-      (is (= "Arya" (re-find #"Arya" (.-innerHTML display-node))))
+      (is (re-find #"Arya" (.-innerHTML display-node)))
       (testing "and when there is new input, it changes the state"
         (sim/change input-node {:target {:value "Nymeria"}})
-        (is (= "Nymeria" (:name @app-state)))))))
+        (om.core/render-all)
+        (is (= "Nymeria" (:name @app-state)))
+        (is (re-find #"Nymeria" (.-innerHTML display-node)))))))
 
 
 (defn button-component [data owner]
@@ -44,8 +46,9 @@
           _ (om/root button-component app-state {:target c})
           display-node (sel1 c [:p])
           input-node (sel1 c [:button])]
-      (println input-node)
       (is (re-find #"Yes" (.-innerHTML display-node)))
       (testing "and it changes after a click"
         (sim/click input-node nil)
-        (is (false? (:answer @app-state)))))))
+        (om.core/render-all)
+        (is (false? (:answer @app-state)))
+        (is (re-find #"No" (.-innerHTML display-node)))))))
