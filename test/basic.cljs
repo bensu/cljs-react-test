@@ -30,3 +30,22 @@
         (is (= "Nymeria" (:name @app-state)))))))
 
 
+(defn button-component [data owner]
+  (om/component
+   (dom/div nil
+            (dom/p nil "My answer is: " (if (:answer data) "Yes" "No"))
+            (dom/button #js {:onClick (fn [_] (om/transact! data :answer not))}
+                        "Toggle"))))
+
+(deftest bool-component
+  (testing "The inital state is displayed"
+    (let [c (tu/new-container!)
+          app-state (atom {:answer true})
+          _ (om/root button-component app-state {:target c})
+          display-node (sel1 c [:p])
+          input-node (sel1 c [:button])]
+      (println input-node)
+      (is (re-find #"Yes" (.-innerHTML display-node)))
+      (testing "and it changes after a click"
+        (sim/click input-node nil)
+        (is (false? (:answer @app-state)))))))
