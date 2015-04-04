@@ -67,6 +67,8 @@ tests, and then tears down React's rendering tree:
                         (tu/unmount! c))))
 ```
 
+Note: this fixture will not work with asynchronous tests.
+
 We write the simplest component we can think of:
 
 ```clj
