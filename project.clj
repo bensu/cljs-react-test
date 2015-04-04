@@ -1,4 +1,4 @@
-(defproject cljs-react-test "0.1.0-SNAPSHOT"
+(defproject cljs-react-test "0.1.1-SNAPSHOT"
   :description "A ClojureScript wrapper around Reacts Test Utilities"
   :url "https://github.com/bensu/cljs-react-test"
   :license {:name "Eclipse Public License"
