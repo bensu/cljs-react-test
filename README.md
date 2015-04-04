@@ -13,8 +13,8 @@ A thin wrapper around
 [React.addons.TestUtils](https://facebook.github.io/react/docs/test-utils.html).
 It provides convenient access to their Simulate Events in
 ClojureScript in a more idiomatic way. All of
-[React's Synthetic Events]() have their corresponding action in
-kebab-case, removing the "on":
+[React's Synthetic Events](https://facebook.github.io/react/docs/events.html)
+have their corresponding action in kebab-case, removing the "on":
 
     Simulate.onChange(target, data)
     (change target data)
