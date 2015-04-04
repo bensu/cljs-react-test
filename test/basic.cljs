@@ -1,6 +1,7 @@
 (ns cljs-react-test.basic
     (:require [cljs.test :refer-macros [deftest testing is are use-fixtures]]
               [cljs-react-test.utils :as tu]
+              [cljs-react-test.simulate :as sim :include-macros true]
               [dommy.core :as dommy :refer-macros [sel1 sel]]
               [om.core :as om :include-macros true]
               [om.dom :as dom :include-macros true]))
@@ -25,7 +26,7 @@
           input-node (sel1 c [:input])]
       (is (= "Arya" (re-find #"Arya" (.-innerHTML display-node))))
       (testing "and when there is new input, it changes the state"
-        (tu/input input-node "Nymeria")
+        (sim/change input-node {:target {:value "Nymeria"}})
         (is (= "Nymeria" (:name @app-state)))))))
 
 
