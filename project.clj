@@ -16,12 +16,10 @@
 
   :deploy-repositories [["clojars" {:creds :gpg}]]
 
-  :plugins [[lein-cljsbuild "1.0.4"]]
+  :plugins [[lein-cljsbuild "1.0.5"]]
 
   :source-paths ["src"]
 
-  :clean-targets ^{:protect false} ["target/*"]
-  
   :cljsbuild {
               :builds {:tests {:source-paths ["src" "test"]
                                :notify-command ["phantomjs"
