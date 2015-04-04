@@ -13,7 +13,7 @@
 (use-fixtures :each (fn [test-fn]
                       (binding [c (tu/new-container!)]
                         (test-fn)
-                        (tu/unmount c))))
+                        (tu/unmount! c))))
 
 (defn test-component [data owner]
   (om/component
