@@ -25,11 +25,11 @@ have their corresponding action in kebab-case, removing the "on":
 All arguments can be passed as ClojureScript objects and they will be
 converted to JS objects via `clj->js`.
 
-Note: Right now all functions take to arguments, even those that don't
+Note: Right now all functions take two arguments, even those that don't
 need the second one:
 
     Simulate.onClick(target)
-    (click target) 		;; --> Will raise a warning
+    (click target) 		;; Will raise a warning
     (click target nil)  ;; Correct Way
 
 This will be corrected in the next version.
@@ -40,9 +40,10 @@ It also offers a couple of convenient fixture functions in the
 
 ## Testing Example:
 
-Will be testing an [Om](https://github.com/omcljs/om) component that
+We will be testing an [Om](https://github.com/omcljs/om) component that
 takes a name as input and displays it. We start by requiring
-`cljs-react-test.utils`, `cljs-react-test.simulate`, and `dommy.core`:
+`cljs-react-test.utils`, `cljs-react-test.simulate`, and `dommy.core`,
+and our usual namespaces:
 
 ```clj
 (ns cljs-react-test.basic
@@ -55,7 +56,7 @@ takes a name as input and displays it. We start by requiring
 ```
 
 We create a `var` where we will put a DOM object to act as container
-for our om application and a fixture function that starts it, runs the
+for our application and a fixture function that starts it, runs the
 tests, and then tears down React's rendering tree:
 
 ```clj
@@ -101,20 +102,24 @@ And then we test it assuming there is a DOM Element at `c`:
 
 Notice the structure of test:
 
-    1. Set up the initial state in `app-state`.
-    2. Start the application with `om/root` into `c`.
-    3. Test the initial rendering.
-    4. Simulate events and then force a re-render with `om/render-all`.
-    5. Test the changes both in the state and in the rendering tree.
-    6. Go back to 4
+1. Set up the initial state in `app-state`.
+2. Start the application with `om/root` into `c`.
+3. Test the initial rendering.
+4. Simulate events and then force a re-render with `om/render-all`.
+5. Test the changes both in the state and in the rendering tree.
+6. Go back to 4
 
 ## Run the Tests 
 
-After installing PhantomJS run:
+After installing [PhantomJS](http://phantomjs.org/) run:
 
     git clone https://github.com/bensu/cljs-react-test
     cd cljs-react-tests 
     lein cljsbuild auto tests 
+
+There is nothing special about PhantomJS and these tests can be run
+wherever `cljs.test` can run. We are just providing the setup to run
+PhantomJS in the `vendor` directory.
 
 ## Contributions
 
