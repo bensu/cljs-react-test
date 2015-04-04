@@ -1,7 +1,7 @@
 (ns cljs-react-test.basic
     (:require [cljs.test :refer-macros [deftest testing is are use-fixtures]]
               [cljs-react-test.utils :as tu]
-              [cljs-react-test.simulate :as sim :include-macros true]
+              [cljs-react-test.simulate :as sim]
               [dommy.core :as dommy :refer-macros [sel1 sel]]
               [om.core :as om :include-macros true]
               [om.dom :as dom :include-macros true]))
