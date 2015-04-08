@@ -52,10 +52,10 @@
 (defn find-component-by [react-tree pred]
   (.findAllInRenderedTree TestUtils react-tree pred))
 
-(defn find-by-name [react-tree class-name]
+(defn find-by-class [react-tree class-name]
   (.scryRenderedDOMComponentsWithClass TestUtils react-tree class-name))
 
-(defn find-one-by-name [react-tree class-name]
+(defn find-one-by-class [react-tree class-name]
   (.findRenderedDOMComponentWithClass TestUtils react-tree class-name))
 
 (defn find-by-tag [react-tree tag]
@@ -68,4 +68,4 @@
   (.scryRenderedComponentsWithType TestUtils react-tree type))
 
 (defn find-one-by-type [react-tree type]
-  (.scryRenderedDOMComponentsWithTag TestUtils react-tree type))
+  (.scryRenderedDOMComponentsWithType TestUtils react-tree type))
