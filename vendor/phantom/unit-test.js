@@ -13,7 +13,7 @@ function exit(code) {
 
 console.log("Loading URL: " + url);
 
-page.open(url, function (status) {
+page.open("file://" + url, function (status) {
     if (status != "success") {
         console.log('Failed to open ' + url);
         phantom.exit(1);
