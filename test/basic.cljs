@@ -37,7 +37,6 @@
         (is (= "Nymeria" (:name @app-state)))
         (is (re-find #"Nymeria" (.-innerHTML display-node)))))))
 
-
 (defn button-component [data owner]
   (om/component
    (dom/div nil

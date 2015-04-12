@@ -21,12 +21,22 @@
 
   :source-paths ["src"]
 
-  :cljsbuild {
-              :builds {:tests {:source-paths ["src" "test"]
-                               :notify-command ["phantomjs"
-                                                "vendor/phantom/unit-test.js"
-                                                "vendor/phantom/unit-test.html"]
-                               :compiler {:output-to "target/testable.js"
-                                          :optimizations :whitespace
-                                          :cache-analysis false
-                                          :pretty-print true}}}})
+  :cljsbuild {:builds 
+              {:slimer-test {:source-paths ["src" "test"]
+                             :notify-command ["slimerjs"
+                                              "vendor/test/unit-test.js"
+                                              "vendor/test/unit-test.html"]
+                             :compiler {:output-to "target/testable.js"
+                                        :output-dir "target/cljs"
+                                        :source-map "target/testable.js.map"
+                                        :optimizations :whitespace
+                                        :cache-analysis false
+                                        :pretty-print true}}
+               :phantom-test {:source-paths ["src" "test"]
+                              :notify-command ["phantomjs"
+                                               "vendor/test/unit-test.js"
+                                               "vendor/test/unit-test.html"]
+                              :compiler {:output-to "target/testable.js"
+                                         :optimizations :whitespace
+                                         :cache-analysis false
+                                         :pretty-print true}}}})
