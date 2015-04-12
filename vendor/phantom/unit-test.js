@@ -1,5 +1,9 @@
 
+var fs = require('fs');
+var workDir = fs.workingDirectory;
+
 var page = require('webpage').create();
+
 var url = phantom.args[0];
 
 page.onConsoleMessage = function (message) {
@@ -13,7 +17,7 @@ function exit(code) {
 
 console.log("Loading URL: " + url);
 
-page.open("file://" + url, function (status) {
+page.open("file://" + workDir + "/" + url, function (status) {
     if (status != "success") {
         console.log('Failed to open ' + url);
         phantom.exit(1);
