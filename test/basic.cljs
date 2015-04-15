@@ -1,7 +1,6 @@
 (ns cljs-react-test.basic
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
-  (:require  
-            [cljs.test :refer-macros [async deftest is testing]]
+  (:require [cljs.test :refer-macros [async deftest is testing]]
             [cljs.core.async :as async :refer (<! >! put! chan)]
             [cljs-react-test.utils :as tu]
             [cljs-react-test.simulate :as sim]
