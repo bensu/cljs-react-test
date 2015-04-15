@@ -87,9 +87,9 @@
       (t/is (re-find #"Yes" (.-innerHTML display-node)))
       (t/testing "and it changes after a click"
         (sim/click input-node nil)
-        (om.core/render-all)
         (go
           (t/is (false? (:answer @app-state)))
+          (om.core/render-all)
           (t/is (re-find #"No" (.-innerHTML display-node)))
           (t/done)
           (tu/unmount! c))))))
