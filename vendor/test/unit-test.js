@@ -69,7 +69,7 @@ p.open("file://" + workDir + "/" + pagePath, function (status) {
     };
 
     p.evaluate(function () {
-	cemerick.cljs.test.set_print_fn_BANG_(function(x) {
+	test.test_runner.set_print_fn_BANG_(function(x) {
 	    // using callPhantom to work around https://github.com/laurentj/slimerjs/issues/223
 	    window.callPhantom(x.replace(/\n/g, "[NEWLINE]")); // since console.log *itself* adds a newline
 	});
@@ -90,6 +90,9 @@ p.open("file://" + workDir + "/" + pagePath, function (status) {
 	    window.alert(exitCodePrefix +
 			 (cemerick.cljs.test.successful_QMARK_(results) ? 0 : 1));
 	});
+
+        test.test_runner.runner(); 
+
     }, exitCodePrefix);
 
 });
