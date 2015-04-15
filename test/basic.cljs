@@ -1,5 +1,6 @@
 (ns cljs-react-test.basic
-    (:require [cljs.test :refer-macros [deftest testing is are use-fixtures]]
+    (:require [cljs.test :refer-macros [deftest testing is are 
+                                        use-fixtures async]]
               [cljs-react-test.utils :as tu]
               [cljs-react-test.simulate :as sim]
               [dommy.core :as dommy :refer-macros [sel1 sel]]
@@ -9,11 +10,6 @@
 (enable-console-print!)
 
 (def ^:dynamic c)
-
-(use-fixtures :each (fn [test-fn]
-                      (binding [c (tu/new-container!)]
-                        (test-fn)
-                        (tu/unmount! c))))
 
 (defn test-component [data owner]
   (om/component
@@ -26,7 +22,8 @@
 
 (deftest name-component
   (testing "The initial state is displayed"
-    (let [app-state (atom {:name "Arya"})
+    (let [c (tu/new-container!) 
+          app-state (atom {:name "Arya"})
           _ (om/root test-component app-state {:target c})
           display-node (second (sel c [:p]))
           input-node (sel1 c [:input])]
@@ -35,7 +32,8 @@
         (sim/change input-node {:target {:value "Nymeria"}})
         (om.core/render-all)
         (is (= "Nymeria" (:name @app-state)))
-        (is (re-find #"Nymeria" (.-innerHTML display-node)))))))
+        (is (re-find #"Nymeria" (.-innerHTML display-node))))
+      (tu/unmount! c))))
 
 (defn button-component [data owner]
   (om/component
@@ -46,7 +44,8 @@
 
 (deftest bool-component
   (testing "The inital state is displayed"
-    (let [app-state (atom {:answer true})
+    (let [c (tu/new-container!)
+          app-state (atom {:answer true})
           _ (om/root button-component app-state {:target c})
           display-node (sel1 c [:p])
           input-node (sel1 c [:button])]
@@ -55,4 +54,22 @@
         (sim/click input-node nil)
         (om.core/render-all)
         (is (false? (:answer @app-state)))
-        (is (re-find #"No" (.-innerHTML display-node)))))))
+        (is (re-find #"No" (.-innerHTML display-node))))
+      (tu/unmount! c))))
+
+(deftest async-component
+  (testing "The inital state is displayed"
+    (async done
+      (let [c (tu/new-container!)
+            app-state (atom {:answer true})
+            _ (om/root button-component app-state {:target c})
+            display-node (sel1 c [:p])
+            input-node (sel1 c [:button])]
+        (is (re-find #"Yes" (.-innerHTML display-node)))
+        (testing "and it changes after a click"
+          (sim/click input-node nil)
+          (om.core/render-all)
+          (is (false? (:answer @app-state)))
+          (is (re-find #"No" (.-innerHTML display-node))))
+        (tu/unmount! c))
+      (done))))
