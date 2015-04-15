@@ -37,27 +37,8 @@ p.open("file://" + workDir + "/" + pagePath, function (status) {
     }
 
     p.onError = function(msg) {
-	var haveCljsTest = p.evaluate(function() {
-	    return (typeof cemerick !== "undefined" &&
-		    typeof cemerick.cljs !== "undefined" &&
-		    typeof cemerick.cljs.test !== "undefined" &&
-		    typeof cemerick.cljs.test.run_all_tests === "function");
-	});
-
 	console.error(msg);
 
-	if (!haveCljsTest) {
-	    var messageLines = [
-		"",
-		"ERROR: cemerick.cljs.test was not required.",
-		"",
-		"You can resolve this issue by ensuring [cemerick.cljs.test] appears",
-		"in the :require clause of your test suite namespaces.",
-		"Also make sure that your build has actually included any test files.",
-		""
-	    ];
-	    console.error(messageLines.join("\n"));
-	}
         phantom.exit(1);
     };
 

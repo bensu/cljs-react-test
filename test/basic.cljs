@@ -1,6 +1,6 @@
 (ns cljs-react-test.basic
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
-  (:require [cemerick.cljs.test :as t] 
+  (:require  
             [cljs.test :refer-macros [async deftest is testing]]
             [cljs.core.async :as async :refer (<! >! put! chan)]
             [cljs-react-test.utils :as tu]
@@ -20,17 +20,17 @@
             (dom/input 
              #js {:onChange #(om/update! data :name (.. % -target -value))
                   :value (:name data)})
-            (dom/p nil (str "Your name t/is: " (:name data))))))
+            (dom/p nil (str "Your name is: " (:name data))))))
 
 (deftest name-component
-  (testing "The initial state t/is displayed"
+  (testing "The initial state is displayed"
     (let [c (tu/new-container!) 
           app-state (atom {:name "Arya"})
           _ (om/root test-component app-state {:target c})
           display-node (second (sel c [:p]))
           input-node (sel1 c [:input])]
       (is (re-find #"Arya" (.-innerHTML display-node)))
-      (testing "and when there t/is new input, it changes the state"
+      (testing "and when there is new input, it changes the state"
         (sim/change input-node {:target {:value "Nymeria"}})
         (om.core/render-all)
         (is (= "Nymeria" (:name @app-state)))
@@ -40,12 +40,12 @@
 (defn button-component [data owner]
   (om/component
    (dom/div nil
-            (dom/p nil "My answer t/is: " (if (:answer data) "Yes" "No"))
+            (dom/p nil "My answer is: " (if (:answer data) "Yes" "No"))
             (dom/button #js {:onClick (fn [_] (om/transact! data :answer not))}
                         "Toggle"))))
 
 (deftest bool-component
-  (testing "The inital state t/is displayed"
+  (testing "The inital state is displayed"
     (let [c (tu/new-container!)
           app-state (atom {:answer true})
           _ (om/root button-component app-state {:target c})
@@ -69,7 +69,7 @@
           "Toggle")))))
 
 (deftest async-component
-  (testing "The inital state t/is displayed"
+  (testing "The inital state is displayed"
     (async done
       (let [c (tu/new-container!)
             app-state (atom {:answer true})
