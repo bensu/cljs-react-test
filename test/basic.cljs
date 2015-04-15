@@ -1,7 +1,6 @@
 (ns cljs-react-test.basic
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
-  (:require [cemerick.cljs.test :as t] 
-            [cljs.test :refer-macros [async deftest is testing]]
+  (:require [cljs.test :refer-macros [async deftest is testing]]
             [cljs.core.async :as async :refer (<! >! put! chan)]
             [cljs-react-test.utils :as tu]
             [cljs-react-test.simulate :as sim]
@@ -61,13 +60,6 @@
 
 (defn async-button [data owner opts]
   (reify
-    om/IWillMount
-    (will-mount [_]
-      (let [click-ch (om/get-state owner :click-ch)]
-        (go-loop []
-          (let [e (<! click-ch)]
-            (om/transact! data :answer not)
-            (recur)))))
     om/IRenderState
     (render-state [_ {:keys [click-ch]}]
       (dom/div nil
@@ -75,21 +67,21 @@
         (dom/button #js {:onClick (fn [_] (put! click-ch :click))}
           "Toggle")))))
 
-(t/deftest ^:async async-component
-  (t/testing "The inital state t/is displayed"
-    (let [c (tu/new-container!)
-          app-state (atom {:answer true})
-          click-ch (chan)
-          _ (om/root async-button app-state {:target c
-                                             :init-state {:click-ch click-ch}})
-          display-node (sel1 c [:p])
-          input-node (sel1 c [:button])]
-      (t/is (re-find #"Yes" (.-innerHTML display-node)))
-      (t/testing "and it changes after a click"
-        (sim/click input-node nil)
-        (go
-          (t/is (false? (:answer @app-state)))
-          (om.core/render-all)
-          (t/is (re-find #"No" (.-innerHTML display-node)))
-          (t/done)
-          (tu/unmount! c))))))
+(deftest async-component
+  (testing "The inital state t/is displayed"
+    (async done
+      (let [c (tu/new-container!)
+            app-state (atom {:answer true})
+            click-ch (chan)
+            _ (om/root async-button app-state {:target c
+                                               :init-state {:click-ch click-ch}})
+            display-node (sel1 c [:p])
+            input-node (sel1 c [:button])]
+        (is (re-find #"Yes" (.-innerHTML display-node)))
+        (testing "and it changes after a click"
+          (sim/click input-node nil)
+          (go
+            (let [e (<! click-ch)]
+              (is (= :click e))
+              (tu/unmount! c)
+              (done))))))))

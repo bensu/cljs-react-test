@@ -1,14 +1,14 @@
 (ns test.test-runner
   (:refer-clojure :exclude (set-print-fn!)) 
-  (:require [cemerick.cljs.test :as t] 
-            [cljs.test :as tt]
+  (:require [cljs.test :as t :refer-macros [run-tests]]
+            [cemerick.cljs.test]
             [cljs-react-test.basic]))
 
 (enable-console-print!)
 
 (defn runner [] 
-  (tt/run-tests
-    (tt/empty-env ::tt/default)
+  (run-tests
+    (t/empty-env :t/default)
     'cljs-react-test.basic))
 
 (defn ^:export set-print-fn! [f]

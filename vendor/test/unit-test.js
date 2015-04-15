@@ -57,8 +57,8 @@ p.open("file://" + workDir + "/" + pagePath, function (status) {
 		""
 	    ];
 	    console.error(messageLines.join("\n"));
-	    phantom.exit(1);
 	}
+        phantom.exit(1);
     };
 
     p.onCallback = function (x) {
@@ -69,6 +69,9 @@ p.open("file://" + workDir + "/" + pagePath, function (status) {
     };
 
     p.evaluate(function () {
+        goog.async.nextTick.setImmediate_ = function(funcToCall) {
+            return window.setTimeout(funcToCall, 0);
+        };
 	cemerick.cljs.test.set_print_fn_BANG_(function(x) {
 	    // using callPhantom to work around https://github.com/laurentj/slimerjs/issues/223
 	    window.callPhantom(x.replace(/\n/g, "[NEWLINE]")); // since console.log *itself* adds a newline
@@ -89,14 +92,14 @@ p.open("file://" + workDir + "/" + pagePath, function (status) {
     };
 
     p.evaluate(function (exitCodePrefix) {
-	var results = cemerick.cljs.test.run_all_tests();
+	// var results = cemerick.cljs.test.run_all_tests();
 	//console.log(results);
-	cemerick.cljs.test.on_testing_complete(results, function () {
-	    window.alert(exitCodePrefix +
-			 (cemerick.cljs.test.successful_QMARK_(results) ? 0 : 1));
-	});
+	// cemerick.cljs.test.on_testing_complete(results, function () {
+	//     window.alert(exitCodePrefix +
+	// 		 (cemerick.cljs.test.successful_QMARK_(results) ? 0 : 1));
+	// });
 
-        test.test_runner.runner(); 
+        test.test_runner.runner();
 
     }, exitCodePrefix);
 
