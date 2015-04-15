@@ -1,7 +1,7 @@
 (ns cljs-react-test.basic
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
-  (:require [cljs.test :refer-macros [deftest testing is are 
-                                      use-fixtures async]]
+  (:require [cemerick.cljs.test :as t 
+             :refer-macros [is deftest testing done]] 
             [cljs.core.async :as async :refer (<! >! put! chan)]
             [cljs-react-test.utils :as tu]
             [cljs-react-test.simulate :as sim]
@@ -75,22 +75,21 @@
         (dom/button #js {:onClick (fn [_] (put! click-ch :click))}
           "Toggle")))))
 
-(deftest async-component
+(deftest ^:async async-component
   (testing "The inital state is displayed"
-    (async done
-      (let [c (tu/new-container!)
-            app-state (atom {:answer true})
-            click-ch (chan)
-            _ (om/root async-button app-state {:target c
-                                               :init-state {:click-ch click-ch}})
-            display-node (sel1 c [:p])
-            input-node (sel1 c [:button])]
-        (is (re-find #"Yes" (.-innerHTML display-node)))
-        (testing "and it changes after a click"
-          (sim/click input-node nil)
-          (om.core/render-all)
-          (go
-            (is (false? (:answer @app-state)))
-            (is (re-find #"No" (.-innerHTML display-node)))
-            (done)
-            (tu/unmount! c)))))))
+    (let [c (tu/new-container!)
+          app-state (atom {:answer true})
+          click-ch (chan)
+          _ (om/root async-button app-state {:target c
+                                             :init-state {:click-ch click-ch}})
+          display-node (sel1 c [:p])
+          input-node (sel1 c [:button])]
+      (is (re-find #"Yes" (.-innerHTML display-node)))
+      (testing "and it changes after a click"
+        (sim/click input-node nil)
+        (om.core/render-all)
+        (go
+          (is (false? (:answer @app-state)))
+          (is (re-find #"No" (.-innerHTML display-node)))
+          (done)
+          (tu/unmount! c))))))
