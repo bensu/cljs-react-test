@@ -1,7 +1,6 @@
 (ns test.test-runner
   (:refer-clojure :exclude (set-print-fn!)) 
-  (:require  
-            [cljs.test :as tt]
+  (:require [cljs.test :as tt]
             [cljs-react-test.basic]))
 
 (enable-console-print!)
