@@ -111,13 +111,13 @@ Notice the structure of test:
 
 ## Run the Tests 
 
-After installing [PhantomJS](http://phantomjs.org/) run:
+First download the repo and compile the tests:
 
     git clone https://github.com/bensu/cljs-react-test
     cd cljs-react-tests 
     lein cljsbuild once tests 
 
-You can run the tests either with PhantomJS or SlimerJS:
+You can then run them either with PhantomJS or SlimerJS:
 
     phantomjs vendor/test/unit-test.js vendor/test/phantomjs-shim.js target/testable.js
     slimerjs vendor/test/unit-test.js target/testable.js
