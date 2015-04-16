@@ -115,11 +115,18 @@ After installing [PhantomJS](http://phantomjs.org/) run:
 
     git clone https://github.com/bensu/cljs-react-test
     cd cljs-react-tests 
-    lein cljsbuild auto tests 
+    lein cljsbuild once tests 
 
-There is nothing special about PhantomJS and these tests can be run
-wherever `cljs.test` can run. We are just providing the setup to run
-PhantomJS in the `vendor` directory.
+You can run the tests either with PhantomJS or SlimerJS:
+
+    phantomjs vendor/test/unit-test.js vendor/test/phantomjs-shim.js target/testable.js
+    slimerjs vendor/test/unit-test.js target/testable.js
+
+I've had better experiences with SlimerJS than with PhantomJS. It is
+not currently possible to run `lein cljsbuild auto tests` with a notify
+command because the tests script (`unit-test.js`) must be manually
+stopped (you can use Ctrl+C in your terminal). This will hopefully be
+solved soon.
 
 ## Contributions
 
