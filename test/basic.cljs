@@ -79,7 +79,7 @@
             input-node (sel1 c [:button])]
         (is (re-find #"Yes" (.-innerHTML display-node)))
         (testing "and it changes after a click"
-          (sim/click input-node nil)
+          (apply sim/click [input-node nil]) ;; Testing gen-sim-fn
           (go
             (let [e (<! click-ch)]
               (is (= :click e))

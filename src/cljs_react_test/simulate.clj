@@ -16,16 +16,24 @@
     onScroll
     onWheel])
 
+(defn react-action [event]
+  (-> event
+    name
+    (clojure.string/replace-first "on" "")
+    ->camelCase
+    symbol))
+
 (defn clj-action [event]
   (-> event
-    ->kebab-case
+    react-action
     name
-    (clojure.string/replace "on-" "")
+    ->kebab-case
     symbol))
 
 (defn ^:private gen-sim-inline-fn [tag]
   `(defmacro ~(clj-action tag) [element# data#]
-     `(~'~(symbol "js" (str "React.addons.TestUtils.Simulate." (name tag))) 
+     `(~'~(symbol "js" (str "React.addons.TestUtils.Simulate."
+                         (name (react-action tag)))) 
        ~element# (cljs.core/clj->js ~data#))))
 
 (defmacro ^:private gen-sim-inline-fns []
@@ -36,8 +44,9 @@
 
 (defn ^:private gen-sim-fn [tag]
   `(defn ~(clj-action tag) [element# data#]
-     (.apply ~(symbol "js" (str "React.addons.TestUtils.Simulate." (name tag))) 
-             nil (cljs.core/into-array (cons element# (cljs.core/clj->js data#))))))
+     (.apply ~(symbol "js" (str "React.addons.TestUtils.Simulate."
+                             (name (react-action tag)))) 
+       nil (cljs.core/into-array (cons element# (cljs.core/clj->js data#))))))
 
 (defmacro ^:private gen-sim-fns []
   `(do
