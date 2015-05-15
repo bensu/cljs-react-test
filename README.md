@@ -111,22 +111,20 @@ Notice the structure of test:
 
 ## Run the Tests 
 
-First download the repo and compile the tests:
+First download the repo:
 
     git clone https://github.com/bensu/cljs-react-test
     cd cljs-react-tests 
-    lein cljsbuild once tests 
 
-You can then run them either with PhantomJS or SlimerJS:
+And then run the tests with [doo](https://github.com/bensu/doo):
 
-    phantomjs vendor/test/unit-test.js vendor/test/phantomjs-shim.js target/testable.js
-    slimerjs vendor/test/unit-test.js target/testable.js
+    lein doo slimer test
 
-I've had better experiences with SlimerJS than with PhantomJS. It is
-not currently possible to run `lein cljsbuild auto tests` with a notify
-command because the tests script (`unit-test.js`) must be manually
-stopped (you can use Ctrl+C in your terminal). This will hopefully be
-solved soon.
+Or if you want to use PhantomJS:
+
+    lein doo phantom test
+
+I've had better experiences with SlimerJS than with PhantomJS.
 
 ## Contributions
 
