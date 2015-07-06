@@ -1,4 +1,4 @@
-(defproject cljs-react-test "0.1.2-SNAPSHOT"
+(defproject cljs-react-test "0.1.3-SNAPSHOT"
   :description "A ClojureScript wrapper around Reacts Test Utilities"
   :url "https://github.com/bensu/cljs-react-test"
   :license {:name "Eclipse Public License"
@@ -7,7 +7,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "0.0-3308"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
-                 [cljsjs/react-with-addons "0.12.2-4"]
+                 [cljsjs/react-with-addons "0.13.3-0"]
                  [prismatic/dommy "1.0.0"]
                  [camel-snake-kebab "0.3.1" :exclusions [com.keminglabs/cljx]]]
 
@@ -17,18 +17,19 @@
   :deploy-repositories [["clojars" {:creds :gpg}]]
 
   :plugins [[lein-cljsbuild "1.0.5"]
-            [lein-doo "0.1.0-SNAPSHOT"]]
+            [lein-doo "0.1.2-SNAPSHOT"]]
   
-  :aliases {"test" ["with-profile" "test" "doo" "slimer" "test"]}
+  :aliases {"test" ["with-profile" "test" "doo" "phantom" "test"]}
 
   :source-paths ["src"]
   
-  :profiles {:test {:dependencies [[org.omcljs/om "0.8.8" :exclusions [cljsjs/react]]]}}
+  :profiles {:test {:dependencies [[org.omcljs/om "0.9.0" :exclusions [cljsjs/react]]]}}
+                 
   :cljsbuild {:builds 
               {:test {:source-paths ["src" "test"]
-                             :compiler {:output-to "target/testable.js"
-                                        :output-dir "target/cljs"
-                                        :source-map "target/testable.js.map"
-                                        :optimizations :whitespace
-                                        :cache-analysis false
-                                        :pretty-print true}}}})
+                      :compiler {:output-to "target/testable.js"
+                                 :main 'test.test-runner
+                                 :source-map "target/testable.js.map"
+                                 :optimizations :whitespace
+                                 :cache-analysis false
+                                 :pretty-print true}}}})
