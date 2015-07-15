@@ -118,13 +118,21 @@ First download the repo:
 
 And then run the tests with [doo](https://github.com/bensu/doo):
 
-    lein doo slimer test
+    lein with-profile test doo slimer test
 
 Or if you want to use PhantomJS:
 
-    lein doo phantom test
+    lein with-profile test doo phantom test
 
-I've had better experiences with SlimerJS than with PhantomJS.
+Or use the alias defined in `project.clj` which uses SlimerJS:
+
+    lein test
+    
+
+I've had a better experience with SlimerJS than with PhantomJS.
+
+We need to run the tests in a different profile since the library
+itself shouldn't depend on `om` but the tests do.
 
 ## Contributions
 
