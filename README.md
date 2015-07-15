@@ -7,6 +7,17 @@
     (:require [cljs-react-test.simulate :as sim]
               [cljs-react-test.utils :as tu])
 
+It is not trivial to get the dependecies right when adding libraries
+that depend on different versions of React (addons vs no addons). The following 
+very explicit configuration should work:
+
+```clj
+(:dependencies [org.omcljs/om "0.9.0" :exclusions [cljsjs/react]]
+               [cljs-react-test "0.1.3-SNAPSHOT"]
+               [cljsjs/react-with-addons "0.13.3-0"])
+```
+
+
 ## Description
 
 A thin wrapper around
