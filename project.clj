@@ -17,9 +17,9 @@
   :deploy-repositories [["clojars" {:creds :gpg}]]
 
   :plugins [[lein-cljsbuild "1.0.5"]
-            [lein-doo "0.1.2-SNAPSHOT"]]
+            [lein-doo "0.1.3-SNAPSHOT"]]
   
-  :aliases {"test" ["with-profile" "test" "doo" "phantom" "test"]}
+  :aliases {"test" ["with-profile" "test" "doo" "slimer" "test"]}
 
   :source-paths ["src"]
   
