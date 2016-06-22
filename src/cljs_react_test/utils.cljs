@@ -3,12 +3,12 @@
   (:require [cljsjs.react]
             [dommy.core :as dommy :refer-macros [sel sel1]]))
 
-;; For Fixtures 
+;; For Fixtures
 
 (defn unmount!
   "Unmounts the React Component at a node"
   [n]
-  (.unmountComponentAtNode js/React n))
+  (.unmountComponentAtNode js/ReactDOM n))
 
 (defn container-div []
   (let [id (str "container-" (gensym))
