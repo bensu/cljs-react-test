@@ -1,4 +1,4 @@
-(defproject cljs-react-test "0.1.3-SNAPSHOT"
+(defproject cljs-react-test "0.1.3"
   :description "A ClojureScript wrapper around Reacts Test Utilities"
   :url "https://github.com/bensu/cljs-react-test"
   :license {:name "Eclipse Public License"
@@ -18,14 +18,14 @@
 
   :plugins [[lein-cljsbuild "1.0.5"]
             [lein-doo "0.1.3-SNAPSHOT"]]
-  
+
   :aliases {"test" ["with-profile" "test" "doo" "slimer" "test"]}
 
   :source-paths ["src"]
-  
+
   :profiles {:test {:dependencies [[org.omcljs/om "0.9.0" :exclusions [cljsjs/react]]]}}
-                 
-  :cljsbuild {:builds 
+
+  :cljsbuild {:builds
               {:test {:source-paths ["src" "test"]
                       :compiler {:output-to "target/testable.js"
                                  :main 'test.test-runner
