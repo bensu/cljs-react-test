@@ -1,4 +1,4 @@
-# cljs-react-test 
+# cljs-react-test
 
 ## Installing
 
@@ -8,15 +8,14 @@
               [cljs-react-test.utils :as tu])
 
 It is not trivial to get the dependecies right when adding libraries
-that depend on different versions of React (addons vs no addons). The following 
+that depend on different versions of React (addons vs no addons). The following
 very explicit configuration should work:
 
 ```clj
-(:dependencies [org.omcljs/om "0.9.0" :exclusions [cljsjs/react]]
-               [cljs-react-test "0.1.3-SNAPSHOT"]
-               [cljsjs/react-with-addons "0.13.3-0"])
+(:dependencies [cljs-react-test "0.1.4-SNAPSHOT"]
+               [cljsjs/react-with-addons "15.2.0-0"]
+               [cljsjs/react-dom "15.2.0-0" :exclusions [cljsjs/react]])
 ```
-
 
 ## Description
 
@@ -48,8 +47,11 @@ This will be corrected in the next version.
 It also offers a couple of convenient fixture functions in the
 `cljs-react-test.utils` namespace such as `new-container!` and `unmount!`.
 
-
 ## Testing Example:
+
+> This guide uses `om` which is deprecated in favor of `om.next`
+> For an example using raw React, look at [`test/basic.cljs`](https://github.com/bensu/cljs-react-test/blob/master/test/basic.cljs)
+> in this repository
 
 We will be testing an [Om](https://github.com/omcljs/om) component that
 takes a name as input and displays it. We start by requiring
@@ -88,7 +90,7 @@ We write the simplest component we can think of:
   (om/component
    (dom/div nil
             (dom/p nil "Enter your name:")
-            (dom/input 
+            (dom/input
              #js {:onChange #(om/update! data :name (.. % -target -value))
                   :value (:name data)})
             (dom/p nil (str "Your name is: " (:name data))))))
@@ -120,12 +122,12 @@ Notice the structure of test:
 5. Test the changes both in the state and in the rendering tree.
 6. Go back to 4
 
-## Run the Tests 
+## Run the Tests
 
 First download the repo:
 
     git clone https://github.com/bensu/cljs-react-test
-    cd cljs-react-tests 
+    cd cljs-react-tests
 
 And then run the tests with [doo](https://github.com/bensu/doo):
 
@@ -138,7 +140,6 @@ Or if you want to use PhantomJS:
 Or use the alias defined in `project.clj` which uses SlimerJS:
 
     lein test
-    
 
 I've had a better experience with SlimerJS than with PhantomJS.
 
@@ -151,7 +152,7 @@ Pull requests, issues, and feedback welcome.
 
 ## License
 
-Copyright © 2015 Sebastian Bensusan
+Copyright © 2016 Sebastian Bensusan
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
