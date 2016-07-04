@@ -6,7 +6,7 @@
 
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "0.0-3308"]
-                 [prismatic/dommy "1.0.0"]
+                 [cljsjs/react-with-addons "15.2.0-0"]
                  [camel-snake-kebab "0.4.0"]]
 
   :scm {:name "git"
@@ -21,8 +21,8 @@
 
   :source-paths ["src"]
 
-  :profiles {:test {:dependencies [[org.clojure/core.async "0.1.346.0-17112a-alpha"]
-                                   [rum "0.10.2"]]}}
+  :profiles {:test {:dependencies [[prismatic/dommy "1.0.0"]
+                                   [cljsjs/react-dom "15.2.0-0" :exclusions [cljsjs/react]]]}}
 
   :cljsbuild {:builds
               {:test {:source-paths ["src" "test"]
@@ -30,6 +30,6 @@
                                  :output-dir "target"
                                  :main 'test.test-runner
                                  :source-map "target/testable.js.map"
-                                 :optimizations :whitespace
+                                 :optimizations :none
                                  :cache-analysis false
                                  :pretty-print true}}}})
