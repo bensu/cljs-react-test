@@ -1,87 +1,61 @@
 (ns cljs-react-test.basic
-  (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:require [cljs.test :refer-macros [async deftest is testing]]
-            [cljs.core.async :as async :refer (<! >! put! chan)]
+            [cljsjs.react]
+            [cljsjs.react.dom]
             [cljs-react-test.utils :as tu]
             [cljs-react-test.simulate :as sim]
-            [dommy.core :as dommy :refer-macros [sel1 sel]]
-            [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true]))
+            [dommy.core :as dommy :refer-macros [sel1 sel]]))
 
 (enable-console-print!)
 
 (def ^:dynamic c)
 
-(defn test-component [data owner]
-  (om/component
-   (dom/div nil
-            (dom/p nil "Enter your name:")
-            (dom/input 
-             #js {:onChange #(om/update! data :name (.. % -target -value))
-                  :value (:name data)})
-            (dom/p nil (str "Your name is: " (:name data))))))
+(def app-state (atom "Arya"))
+
+(defn name-input []
+  (js/React.createElement
+    "div" #js {}
+    (js/React.createElement
+      "input" #js {"onChange" (fn [e]
+                                (reset! app-state (.. e -target -value)))})
+    (js/React.createElement
+      "p" #js {}
+      @app-state)))
 
 (deftest name-component
   (testing "The initial state is displayed"
-    (let [c (tu/new-container!) 
-          app-state (atom {:name "Arya"})
-          _ (om/root test-component app-state {:target c})
-          display-node (second (sel c [:p]))
+    (let [c (tu/new-container!)
+          _ (js/ReactDOM.render (name-input) c)
+          display-node (sel1 c [:p])
           input-node (sel1 c [:input])]
       (is (re-find #"Arya" (.-innerHTML display-node)))
       (testing "and when there is new input, it changes the state"
         (sim/change input-node {:target {:value "Nymeria"}})
-        (om.core/render-all)
-        (is (= "Nymeria" (:name @app-state)))
+        (js/ReactDOM.render (name-input) c)
+        (is (= "Nymeria" @app-state))
         (is (re-find #"Nymeria" (.-innerHTML display-node))))
       (tu/unmount! c))))
 
-(defn button-component [data owner]
-  (om/component
-   (dom/div nil
-            (dom/p nil "My answer is: " (if (:answer data) "Yes" "No"))
-            (dom/button #js {:onClick (fn [_] (om/transact! data :answer not))}
-                        "Toggle"))))
+(def button-state (atom true))
+
+(defn button []
+  (js/React.createElement
+    "div" #js {}
+    (js/React.createElement
+      "p" #js {} "My answer is:" (if @button-state "Yes" "No"))
+    (js/React.createElement
+      "button" #js {"onClick" (fn [_] (swap! button-state not))} "Toggle")))
 
 (deftest bool-component
   (testing "The inital state is displayed"
     (let [c (tu/new-container!)
-          app-state (atom {:answer true})
-          _ (om/root button-component app-state {:target c})
+          _ (js/ReactDOM.render (button) c)
           display-node (sel1 c [:p])
           input-node (sel1 c [:button])]
       (is (re-find #"Yes" (.-innerHTML display-node)))
       (testing "and it changes after a click"
         (sim/click input-node nil)
-        (om.core/render-all)
-        (is (false? (:answer @app-state)))
+        (js/ReactDOM.render (button) c)
+        (is (false? @button-state))
         (is (re-find #"No" (.-innerHTML display-node))))
       (tu/unmount! c))))
-
-(defn async-button [data owner opts]
-  (reify
-    om/IRenderState
-    (render-state [_ {:keys [click-ch]}]
-      (dom/div nil
-        (dom/p nil "My answer is: " (if (:answer data) "Yes" "No"))
-        (dom/button #js {:onClick (fn [_] (put! click-ch :click))}
-          "Toggle")))))
-
-(deftest async-component
-  (testing "The inital state is displayed"
-    (async done
-      (let [c (tu/new-container!)
-            app-state (atom {:answer true})
-            click-ch (chan)
-            _ (om/root async-button app-state {:target c
-                                               :init-state {:click-ch click-ch}})
-            display-node (sel1 c [:p])
-            input-node (sel1 c [:button])]
-        (is (re-find #"Yes" (.-innerHTML display-node)))
-        (testing "and it changes after a click"
-          (apply sim/click [input-node nil]) ;; Testing gen-sim-fn
-          (go
-            (let [e (<! click-ch)]
-              (is (= :click e))
-              (tu/unmount! c)
-              (done))))))))
