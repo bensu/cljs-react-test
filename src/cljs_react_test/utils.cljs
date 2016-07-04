@@ -1,7 +1,6 @@
 (ns cljs-react-test.utils
   "Provides common testing functions"
-  (:require [cljsjs.react]
-            [dommy.core :as dommy :refer-macros [sel sel1]]))
+  (:require [cljsjs.react]))
 
 ;; General Utils
 
@@ -19,19 +18,19 @@
   [n]
   (.unmountComponentAtNode js/ReactDOM n))
 
-(defn container-div []
+(defn- container-div []
   (let [id (str "container-" (gensym))
         node (.createElement js/document "div")]
     (set! (.-id node) id)
-    [node (str "#" id)]))
+    [node id]))
 
 (defn insert-container! [container]
-  (dommy/append! (sel1 js/document :body) container))
+  (.appendChild (.-body js/document) container))
 
 (defn new-container! []
   (let [[n s] (container-div)]
     (insert-container! n)
-    (sel1 s)))
+    (.getElementById js/document s)))
 
 ;; Rest of API for completion's sake:
 
