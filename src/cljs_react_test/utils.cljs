@@ -3,6 +3,15 @@
   (:require [cljsjs.react]
             [dommy.core :as dommy :refer-macros [sel sel1]]))
 
+;; General Utils
+
+(defn get-dom-tree [e]
+  (let [children (.-children e)]
+    (if (zero? (.-length children))
+      e
+      (into [e] (for [i (range (.-length children))]
+                  (get-dom-tree (aget children i)))))))
+
 ;; For Fixtures
 
 (defn unmount!
