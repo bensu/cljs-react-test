@@ -2,7 +2,7 @@
 
 ## Installing
 
-[![Clojars Project](http://clojars.org/cljs-react-test/latest-version.svg)](http://clojars.org/om-routes)
+[![Clojars Project](http://clojars.org/cljs-react-test/latest-version.svg)](http://clojars.org/cljs-react-test)
 
     (:require [cljs-react-test.simulate :as sim]
               [cljs-react-test.utils :as tu])
