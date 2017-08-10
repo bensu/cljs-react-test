@@ -1,6 +1,7 @@
 (ns cljs-react-test.utils
   "Provides common testing functions"
-  (:require [cljsjs.react]))
+  (:require [cljsjs.react.dom]
+            [cljsjs.react]))
 
 ;; General Utils
 

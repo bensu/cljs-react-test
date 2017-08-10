@@ -1,6 +1,7 @@
 (ns cljs-react-test.simulate
-  (:require [camel-snake-kebab.core :refer :all])
-  (:refer-clojure :exclude [drop map meta time]))
+  (:require [camel-snake-kebab.core :refer [->camelCase ->kebab-case]])
+  (:refer-clojure :exclude [drop map meta time])
+  )
 
 ;; Structure copied from https://github.com/omcljs/om/blob/master/src/om/dom.clj
 
