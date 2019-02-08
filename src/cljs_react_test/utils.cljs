@@ -1,6 +1,7 @@
 (ns cljs-react-test.utils
   "Provides common testing functions"
-  (:require [cljsjs.react]))
+  (:require [cljsjs.react.dom.test-utils]
+            [cljsjs.react]))
 
 ;; General Utils
 
@@ -34,46 +35,44 @@
 
 ;; Rest of API for completion's sake:
 
-(def TestUtils js/React.addons.TestUtils)
-
 (defn render-in-dom [react-element]
-  (.renderIntoDocument TestUtils react-element))
+  (.renderIntoDocument js/ReactTestUtils react-element))
 
 (defn mock-component [component mock-name]
-  (.mockComponent TestUtils component mock-name))
+  (.mockComponent js/ReactTestUtils component mock-name))
 
 (defn react-element? [react-element]
-  (.isElement TestUtils react-element))
+  (.isElement js/ReactTestUtils react-element))
 
 (defn react-isa? [react-element react-class]
-  (.isElementOfType TestUtils react-element react-class))
+  (.isElementOfType js/ReactTestUtils react-element react-class))
 
 (defn dom-component? [react-component]
-  (.isDOMComponent TestUtils react-component))
+  (.isDOMComponent js/ReactTestUtils react-component))
 
 (defn composite? [react-component]
-  (.isCompositeComponent TestUtils react-component))
+  (.isCompositeComponent js/ReactTestUtils react-component))
 
 (defn composite-with-type? [react-component react-class]
-  (.isCompositeComponentWithType TestUtils react-component react-class))
+  (.isCompositeComponentWithType js/ReactTestUtils react-component react-class))
 
 (defn find-component-by [react-tree pred]
-  (.findAllInRenderedTree TestUtils react-tree pred))
+  (.findAllInRenderedTree js/ReactTestUtils react-tree pred))
 
 (defn find-by-class [react-tree class-name]
-  (.scryRenderedDOMComponentsWithClass TestUtils react-tree class-name))
+  (.scryRenderedDOMComponentsWithClass js/ReactTestUtils react-tree class-name))
 
 (defn find-one-by-class [react-tree class-name]
-  (.findRenderedDOMComponentWithClass TestUtils react-tree class-name))
+  (.findRenderedDOMComponentWithClass js/ReactTestUtils react-tree class-name))
 
 (defn find-by-tag [react-tree tag]
-  (.scryRenderedDOMComponentsWithTag TestUtils react-tree tag))
+  (.scryRenderedDOMComponentsWithTag js/ReactTestUtils react-tree tag))
 
 (defn find-one-by-tag [react-tree tag]
-  (.findRenderedDOMComponentWithTag TestUtils react-tree tag))
+  (.findRenderedDOMComponentWithTag js/ReactTestUtils react-tree tag))
 
 (defn find-by-type [react-tree type]
-  (.scryRenderedComponentsWithType TestUtils react-tree type))
+  (.scryRenderedComponentsWithType js/ReactTestUtils react-tree type))
 
 (defn find-one-by-type [react-tree type]
-  (.findRenderedComponentWithType TestUtils react-tree type))
+  (.findRenderedComponentWithType js/ReactTestUtils react-tree type))

@@ -12,9 +12,9 @@ that depend on different versions of React (addons vs no addons). The following
 very explicit configuration should work:
 
 ```clj
-(:dependencies [cljs-react-test "0.1.4-SNAPSHOT"]
-               [cljsjs/react-with-addons "15.2.0-0"]
-               [cljsjs/react-dom "15.2.0-0" :exclusions [cljsjs/react]])
+(:dependencies [cljs-react-test "0.1.6-SNAPSHOT"]
+               [cljsjs/react "16.8.1-0"]
+               [cljsjs/react-dom "16.8.1-0" :exclusions [cljsjs/react]])
 ```
 
 ## Description
@@ -39,7 +39,7 @@ Note: Right now all functions take two arguments, even those that don't
 need the second one:
 
     Simulate.onClick(target)
-    (click target) 		;; Will raise a warning
+    (click target)      ;; Will raise a warning
     (click target nil)  ;; Correct Way
 
 This will be corrected in the next version.

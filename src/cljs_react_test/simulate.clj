@@ -1,5 +1,5 @@
 (ns cljs-react-test.simulate
-  (:require [camel-snake-kebab.core :refer :all])
+  (:require [camel-snake-kebab.core :refer [->camelCase ->kebab-case]])
   (:refer-clojure :exclude [drop map meta time]))
 
 ;; Structure copied from https://github.com/omcljs/om/blob/master/src/om/dom.clj
@@ -32,7 +32,7 @@
 
 (defn ^:private gen-sim-inline-fn [tag]
   `(defmacro ~(clj-action tag) [element# data#]
-     `(~'~(symbol "js" (str "React.addons.TestUtils.Simulate."
+     `(~'~(symbol "js" (str "ReactTestUtils.Simulate."
                          (name (react-action tag))))
        ~element# (cljs.core/clj->js ~data#))))
 
@@ -44,7 +44,7 @@
 
 (defn ^:private gen-sim-fn [tag]
   `(defn ~(clj-action tag) [element# data#]
-     (.apply ~(symbol "js" (str "React.addons.TestUtils.Simulate."
+     (.apply ~(symbol "js" (str "ReactTestUtils.Simulate."
                              (name (react-action tag))))
        nil (cljs.core/into-array (cons element# (cljs.core/clj->js data#))))))
 
