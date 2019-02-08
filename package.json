@@ -6,8 +6,8 @@
   "repository": "https://github.com/retro/cljs-react-test",
   "license": "MIT",
   "devDependencies": {
-    "karma": "^0.13.16",
-    "karma-chrome-launcher": "^2.0.0",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-cljs-test": "^0.1.0"
   }
 }
