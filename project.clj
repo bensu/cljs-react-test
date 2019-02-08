@@ -1,4 +1,4 @@
-(defproject org.clojars.flawless/cljs-react-test "0.1.6"
+(defproject cljs-react-test "0.1.6"
   :description "A ClojureScript wrapper around Reacts Test Utilities"
   :url "https://github.com/bensu/cljs-react-test"
   :license {:name "Eclipse Public License"
@@ -11,7 +11,7 @@
                  [camel-snake-kebab "0.4.0"]]
 
   :scm {:name "git"
-        :url "https://github.com/Flawless/cljs-react-test"}
+        :url "https://github.com/bensu/cljs-react-test"}
 
   :deploy-repositories [["clojars" {:creds :gpg}]]
 
