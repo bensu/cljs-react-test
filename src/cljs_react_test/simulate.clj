@@ -33,7 +33,7 @@
 
 (defn ^:private gen-sim-inline-fn [tag]
   `(defmacro ~(clj-action tag) [element# data#]
-     `(~'~(symbol "js" (str "React.addons.TestUtils.Simulate."
+     `(~'~(symbol "js" (str "ReactTestUtils.Simulate."
                          (name (react-action tag))))
        ~element# (cljs.core/clj->js ~data#))))
 
@@ -45,7 +45,7 @@
 
 (defn ^:private gen-sim-fn [tag]
   `(defn ~(clj-action tag) [element# data#]
-     (.apply ~(symbol "js" (str "React.addons.TestUtils.Simulate."
+     (.apply ~(symbol "js" (str "ReactTestUtils.Simulate."
                              (name (react-action tag))))
        nil (cljs.core/into-array (cons element# (cljs.core/clj->js data#))))))
 

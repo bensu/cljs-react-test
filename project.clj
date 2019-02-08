@@ -6,8 +6,8 @@
 
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/clojurescript "1.10.516"]
-                 [cljsjs/react "16.8.0-0"]
-                 [cljsjs/react-dom "16.8.0-0"]
+                 [cljsjs/react "16.8.1-0"]
+                 [cljsjs/react-dom "16.8.1-0"]
                  [camel-snake-kebab "0.4.0"]]
 
   :scm {:name "git"
@@ -25,7 +25,7 @@
   :source-paths ["src"]
 
   :profiles {:test {:dependencies [[prismatic/dommy "1.1.0"]
-                                   [cljsjs/react-dom "16.8.0-0" :exclusions [cljsjs/react]]]}}
+                                   [cljsjs/react-dom "16.8.1-0" :exclusions [cljsjs/react]]]}}
 
   :cljsbuild {:builds
               {:test {:source-paths ["src" "test"]
